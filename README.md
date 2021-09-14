@@ -4,7 +4,17 @@ Repo for my Airflow Training
 
 ## Clone to Local
 
+```bash
 git clone https://github.com/bobquest33/airflow_training_09_21.git
+```
+
+## Pull latest changes
+
+
+```bash
+git pull origin master
+```
+
 
 ## How to Run
 
