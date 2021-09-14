@@ -28,7 +28,7 @@ docker-compose down
 Build Airflow Config (Only required when doing clean build)
 
 ```bash
-docker-compose.exe build --pull --no-cache
+docker-compose build --pull --no-cache
 ```
 
 Run airflow-init to setup airflow database (To be run first time)
