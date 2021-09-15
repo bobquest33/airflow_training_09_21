@@ -15,6 +15,11 @@ git clone https://github.com/bobquest33/airflow_training_09_21.git
 git pull origin master
 ```
 
+## Env Setup
+
+```
+echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
+```
 
 ## How to Run
 
