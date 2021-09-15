@@ -11,7 +11,7 @@ import requests
 
 default_args = {
             "owner": "airflow",
-            "start_date" : days_ago(2),
+            "start_date": days_ago(2),
             "depends_on_past": False,
             "email_on_failure": False,
             "email_on_retry": False,
@@ -53,7 +53,7 @@ with DAG(dag_id="forex_data_pipeline_v_3", schedule_interval="@daily", default_a
         fs_conn_id="forex_path",
         filepath="forex_currencies.csv",
         poke_interval=5,
-        timeout=20
+        timeout=20)
     
     downloading_rates = PythonOperator(
         task_id="downloading_rates",
