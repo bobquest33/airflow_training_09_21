@@ -6,7 +6,7 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BaseOperator
 from airflow.utils.dates import days_ago
 
-import jason
+import json
 import csv
 import requests
 
@@ -63,11 +63,11 @@ with DAG(dag_id="forex_data_pipeline_v_3", schedule_interval="@daily", default_a
     )
 
     saving_rates = BashOperator(
-        task_id = "saving_rates"
+        task_id = "saving_rates",
         bash_command="""
             hdfs dfs -mkdir -p /forex &&\
             hdfs dfs -put -f $AIRFLOW_HONE/dags/files/forex_rates.jason /forex
         """
 
     )
-    )
+    
