@@ -55,6 +55,7 @@ with DAG(dag_id="forex_data_pipeline_v_3", schedule_interval="@daily", default_a
         filepath="forex_currencies.csv",
         poke_interval=5,
         timeout=20
+    )
     
     downloading_rates = PythonOperator(
         task_id="downloading_rates",
