@@ -5,7 +5,7 @@ from datetime import timedelta
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
 
-import jason
+import json
 import csv
 import requests
 
@@ -23,30 +23,30 @@ default_args = {
 # Download forex rates according to the currencies we want to watch
 # described in the file forex_currencies.csv
 def download_rates():
-    with open('/usr/local/airflow/dags/files/forex_currencies.csv') as forex_currencies:
-        reader = csv.DictReader(forex_currencies, delimiter=';')
+    with open('/tmp/files/forex_currencies.csv') as forex_currencies:
+        reader = csv.DictReader(forex_currencies, delimiter=',')
         for row in reader:
             base = row['base']
             with_pairs = row['with_pairs'].split(' ')
-            indata = requests.get('https://api.exchangeratesapi.io/latest?base=' + base).json()
+            indata = requests.get('https://open.er-api.com/v6/latest/' + base, verify=False).json()
             outdata = {'base': base, 'rates': {}, 'last_update': indata['date']}
             for pair in with_pairs:
                 outdata['rates'][pair] = indata['rates'][pair]
-            with open('/usr/local/airflow/dags/files/forex_rates.json', 'a') as outfile:
+            with open('/tmp/files/forex_rates.json', 'a') as outfile:
                 json.dump(outdata, outfile)
                 outfile.write('\n')
 
-with DAG(dag_id="forex_data_pipeline_v_3", schedule_interval="@daily", default_args=default_args, catchup=False) as dag:
+with DAG(dag_id="forex_data_pipeline_v_3_python", schedule_interval="@daily", default_args=default_args, catchup=False) as dag:
     
-    is_forex_rates_available = HttpSensor(
-        task_id="is_forex_rates_available",
-        method="GET",
-        http_conn_id="forex_api",
-        endpoint="latest",
-        response_check=lambda response: "rates" in response.text,
-        poke_interval=5,
-        timeout=20
-    )
+#    is_forex_rates_available = HttpSensor(
+#        task_id="is_forex_rates_available",
+#        method="GET",
+#        http_conn_id="forex_api",
+#        endpoint="latest",
+#        response_check=lambda response: "rates" in response.text,
+#        poke_interval=5,
+#        timeout=20
+#    )
 
     is_forex_currencies_file_available = FileSensor(
         task_id="is_forex_currencies_file_available",
@@ -59,4 +59,4 @@ with DAG(dag_id="forex_data_pipeline_v_3", schedule_interval="@daily", default_a
         task_id="downloading_rates",
         python_callable = download_rates
     )
-    )
+ 

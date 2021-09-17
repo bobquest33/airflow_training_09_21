@@ -6,7 +6,7 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.operators.hive_operator import HiveOperator
 from datetime import datetime, timedelta
 from airflow.utils.dates import days_ago
-
+from airflow.contrib.operators.spark_submit_operator import SparkSubmitOperator
 import csv
 import requests
 import json

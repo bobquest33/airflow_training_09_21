@@ -3,7 +3,7 @@ from airflow.sensors.http_sensor import HttpSensor
 from airflow.contrib.sensors.file_sensor import FileSensor
 from datetime import datetime, timedelta
 from airflow.operators.python_operator import PythonOperator
-from airflow.operators.bash_operator import BaseOperator
+from airflow.operators.bash_operator import BashOperator
 from airflow.utils.dates import days_ago
 
 import json
