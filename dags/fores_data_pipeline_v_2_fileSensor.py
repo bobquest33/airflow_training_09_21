@@ -15,7 +15,7 @@ default_args = {
             "retry_delay": timedelta(minutes=5)
         }
 
-with DAG(dag_id="forex_data_pipeline_v_3", schedule_interval="@daily", default_args=default_args, catchup=False) as dag:
+with DAG(dag_id="forex_data_pipeline_file_v_3", schedule_interval="@daily", default_args=default_args, catchup=False) as dag:
     
     is_forex_rates_available = HttpSensor(
         task_id="is_forex_rates_available",

@@ -27,6 +27,8 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.dummy import DummyOperator
 from airflow.utils.dates import days_ago
 
+local_tz = pendulum.timezone("Europe/Amsterdam")
+
 args = {
     'owner': 'airflow',
 }
@@ -67,7 +69,7 @@ with DAG(
     for i in range(3):
         task = BashOperator(
             task_id='runme_' + str(i),
-            bash_command='echo "{{ task_instance_key_str }}" && sleep 1',
+            bash_command='echo "{{ task_instance_key_str }}  {{ local_tz.convert(execution_date) }}"  && sleep 1',
         )
         task >> run_this
 

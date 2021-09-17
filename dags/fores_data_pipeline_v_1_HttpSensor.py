@@ -14,7 +14,7 @@ default_args = {
     "retry_delay" : timedelta(minutes=5)
  }
 
-with DAG(dag_id="Forex_data_pipeline", 
+with DAG(dag_id="Forex_data_pipeline_http_sensor_v_1", 
           schedule_interval="@daily", 
           default_args=default_args, 
           catchup=False) as dag:
